@@ -1,0 +1,26 @@
+/*
+    Ejemplo el cual involucra una cola de prioridad junto con un comparador.
+    La cola de prioridad guardar los elementos de tipo Rango de acuerdo al
+    siguiente criterio:
+        ordena de acuerdo al tamaño del rango (de menor a mayor), en caso de ser iguales 
+        toma como prioridad aquellos cuyo atributo 'l' suceda primero
+*/
+
+
+struct Rango {
+    int l, r;
+};
+ 
+struct Comparador {
+    bool operator()(const Rango &a, const Rango &b) const {
+        int t1 = a.r - a.l + 1;
+        int t2 = b.r - b.l + 1;
+        if (t1 != t2) {
+            return t1 < t2; // mayor tamaño primero
+        }
+        return a.l > b.l; // menor l primero
+    }
+};
+
+
+priority_queue<Rango, vector<Rango>, Comparador> pendiente;
