@@ -32,14 +32,17 @@ Mi objetivo es consolidar mi conocimiento y facilitar el acceso rápido a herram
 
 
 <p align="center">
-  <a href="https://www.linkedin.com/in/jean-carlos-jimenez-ortega/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-Jeank%20Acevedo-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+  <a href="https://www.linkedin.com/in/jean-carlos-jimenez-ortega/" target="_blank" style="text-decoration: none;">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" width="25" style="vertical-align: middle; margin-right: 6px;">
+    <span>LinkedIn</span>
   </a>
-  &nbsp;&nbsp;
-  <a href="https://codeforces.com/profile/Jeank__" target="_blank">
-    <img src="https://img.shields.io/badge/Codeforces-Jeank-orange?style=for-the-badge&logo=codeforces&logoColor=white" alt="Codeforces"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://codeforces.com/profile/Jeank__" target="_blank" style="text-decoration: none;">
+    <img src="https://sta.codeforces.com/s/95882/images/codeforces-logo-with-telegram.png" alt="Codeforces" width="25" style="vertical-align: middle; margin-right: 6px;">
+    <span>Codeforces</span>
   </a>
 </p>
+
 ---
 
 ## 🎯 Objetivo personal
