@@ -3,11 +3,7 @@
 <p align="center">
   <b>Repositorio personal dedicado a la programación competitiva</b>  
   <br>
-  <i>Templates · Algoritmos · Técnicas · Tips</i>
-  <br><br>
-  <img src="https://img.shields.io/badge/Language-C%2B%2B17-blue?style=for-the-badge">
-  <img src="https://img.shields.io/badge/Editor-VSCode-0078D7?style=for-the-badge&logo=visualstudiocode&logoColor=white">
-  <img src="https://img.shields.io/badge/OS-Linux-black?style=for-the-badge&logo=linux">
+  <i>Templates · Algoritmos · Técnicas · Tips</i>    
 </p>
 
 ---
@@ -34,15 +30,16 @@ Mi objetivo es consolidar mi conocimiento y facilitar el acceso rápido a herram
 
 ## 🌐 Conéctate conmigo
 
+
 <p align="center">
   <a href="https://www.linkedin.com/in/jean-carlos-jimenez-ortega/" target="_blank">
-    <img src="https://img.shields.io/badge/LinkedIn-Jeank%20Acevedo-0A66C2?style=for-the-badge&logo=linkedin">
+    <img src="https://img.shields.io/badge/LinkedIn-Jeank%20Acevedo-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
   </a>
+  &nbsp;&nbsp;
   <a href="https://codeforces.com/profile/Jeank__" target="_blank">
-    <img src="https://img.shields.io/badge/Codeforces-Jeank-orange?style=for-the-badge&logo=codeforces">
+    <img src="https://img.shields.io/badge/Codeforces-Jeank-orange?style=for-the-badge&logo=codeforces&logoColor=white" alt="Codeforces"/>
   </a>
 </p>
-
 ---
 
 ## 🎯 Objetivo personal
