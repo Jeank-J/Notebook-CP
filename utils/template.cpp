@@ -16,9 +16,9 @@ using namespace std;
 #define FAST ios_base::sync_with_stdio(0); cin.tie(0);cout.tie(0);
 
 
-const int mod = 1e9 + 7;
+const int MOD = 1e9 + 7;
 const int N = 2e5 + 7;
-const int inf = 1e9;
+const int INF = 1e9;
 
 
 
