@@ -1,0 +1,26 @@
+log(x)   // logaritmo natural → base e ≈ 2.71828
+
+log10(x) // base 10
+
+log2(x)  // base 2
+
+
+log(a^b)= b log (a)
+
+log(a * b) = log (a) + log(b)
+
+log(a / b) = log(a) - log(b)
+
+log b(a) = log(a) / log(B)
+
+// el maximo comino es igual a invertir los valores y buscar el minimo
+max(p1 * p2​ * p3​) =  min(-log(p1)​ - log(p2) - log(p3))
+
+// funcion exp() = a exponente e
+p1 * p2 * p3 * p4 = exp(log(p1) + log(p2) + log(p3) + log(p4))
+
+
+log(n!) = SUMATORIA log(i)
+
+// Cuantos digitos tiene n!
+log10(n!) = SUMATORIA (log10(i))
