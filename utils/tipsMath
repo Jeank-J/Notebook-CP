@@ -1,3 +1,3 @@
-// para saber si  a === b % c ('a' es  congruente con 'b' modulo 'c')
+// para saber si  aX === b % c ('a' es  congruente con 'b' modulo 'c'),  siendo 'a' el coeficiente y 'X' la incognita
 // se debe de cumplir de que __gcd(a,c) % b == 0
 
