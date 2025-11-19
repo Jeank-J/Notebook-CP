@@ -1,0 +1,31 @@
+// gcd(a,b) = gcd(b,a % b)
+// gcd(a,0) = ∣a∣
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+
+// La ecuación  Ax+By=K tiene solución entera si y solo si el gcd(A, B) divide a K.
+// gcd(A,B) =A(x0)​+B(y0​)
+// Ax + By =multiplo de gcd(A,B)
+
+int gcdExtendido(int a, int b, ll &x, ll &y){
+    if(a == 0){
+        x = 0;
+        y = 1;
+        return b;
+    }
+
+    ll x1, y1;
+    int gcd = gcdExtendido(b % a, a, x1, y1);
+    
+    x = y1 - 1LL * (b/a) * x1;
+    y = x1;
+    return gcd;
+}
