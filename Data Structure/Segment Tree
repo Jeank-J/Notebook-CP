@@ -1,0 +1,55 @@
+const int N = 1e5+1;
+ 
+struct Dato{
+    ll sum, mx;
+    Dato(){};
+    Dato(ll a, ll b){
+        sum = a; mx = b;
+    };
+};
+ 
+ll v[N];
+Dato st[N * 4];
+ 
+Dato oper(Dato &L, Dato &R){
+    return Dato({L.sum + R.sum, max(L.mx,R.mx)});
+}
+ 
+void build(int nodo, int l, int r){
+    if (l == r){
+        st[nodo] = {v[l],v[l]};
+        return;
+    }
+    int mid = (l+r) / 2;
+    build(nodo * 2, l, mid);
+    build(nodo * 2 + 1, mid+1, r);
+ 
+    st[nodo] = oper(st[nodo*2],st[nodo*2+1]);
+    return;
+}
+ 
+Dato query(int nodo, int lt, int rt, int l, int r){
+    if (lt > r or rt  < l) return Dato({0LL,1});
+    if (lt >= l and rt <= r) return st[nodo];
+    int mid = (lt + rt) / 2;
+    Dato L = query(nodo * 2, lt, mid, l, r);
+    Dato R = query(nodo * 2 + 1, mid+1, rt, l, r);
+    Dato res = oper(L,R);
+    return res;
+    
+}
+
+// actauliza todo i tal que l <= i <= r
+void upd(int nodo, int lt, int rt, int l, int r){
+    if (lt > r or rt < l or st[nodo].mx == 1) return;
+    if (lt == rt){
+        ll val = (ll)sqrt(st[nodo].sum);
+        st[nodo] = {val,val};
+        return;
+    }
+    int mid = (lt + rt) / 2;    
+    upd(nodo * 2, lt, mid, l, r);
+    upd(nodo * 2 + 1, mid+1, rt, l, r);
+    st[nodo] = oper(st[nodo * 2], st[nodo * 2 + 1]);
+    return;
+}
