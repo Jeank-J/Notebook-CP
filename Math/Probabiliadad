@@ -1,0 +1,210 @@
+========================================================
+PROBABILIDAD – FORMULAS FUNDAMENTALES
+========================================================
+
+--------------------------------------------------------
+Regla 1: Probabilidad básica (espacio muestral)
+--------------------------------------------------------
+
+Formula:
+P(E) = |E| / |Ω|
+
+Donde:
+Ω : espacio muestral (todos los casos posibles)
+E : evento de interés, E ⊆ Ω
+
+Interpretación:
+La probabilidad es la fracción de casos favorables sobre el total,
+siempre que todos los casos sean equiprobables.
+
+Uso típico:
+- Problemas simples
+- Conteo directo
+- Simetría total
+
+Advertencia:
+No usar si hay información previa o sesgo.
+
+
+--------------------------------------------------------
+Regla 2: Regla del complemento
+--------------------------------------------------------
+
+Formula:
+P(¬A) = 1 − P(A)
+
+Donde:
+A  : evento
+¬A : evento contrario (A no ocurre)
+
+Interpretación:
+Es más fácil contar cuándo algo NO ocurre que cuándo ocurre.
+
+Uso típico:
+- “al menos uno”
+- “ninguno”
+- errores acumulativos
+
+
+--------------------------------------------------------
+Regla 3: Probabilidad condicional
+--------------------------------------------------------
+
+Formula:
+P(B | A) = P(A ∩ B) / P(A)    (P(A) > 0)
+
+Donde:
+A : evento conocido
+B : evento de interés
+
+Interpretación:
+Probabilidad de B sabiendo que A ya ocurrió.
+
+Uso típico:
+- Información parcial
+- Filtrado de casos
+- Inferencia
+
+
+--------------------------------------------------------
+Regla 4: Intersección de eventos (regla fundamental)
+--------------------------------------------------------
+
+Formula:
+P(A ∩ B) = P(A) · P(B | A)
+
+Interpretación:
+Probabilidad de que ocurran A y B en secuencia.
+
+Importante:
+Esta NO es una heurística.
+Es la definición formal que conecta probabilidad total y condicional.
+
+Uso típico:
+- Eventos dependientes
+- Árboles de decisión
+- Procesos secuenciales
+
+
+--------------------------------------------------------
+Regla 5: Eventos independientes
+--------------------------------------------------------
+
+Condición:
+A y B son independientes si:
+P(B | A) = P(B)
+
+Formula:
+P(A ∩ B) = P(A) · P(B)
+
+Advertencia:
+En concursos, la mayoría de eventos NO son independientes.
+Nunca asumir independencia sin justificar.
+
+
+--------------------------------------------------------
+Regla 6: Regla de la probabilidad total
+--------------------------------------------------------
+
+Si A1, A2, ..., An forman una partición de Ω:
+
+Formula:
+P(B) = Σ P(Ai) · P(B | Ai)
+
+Interpretación:
+La probabilidad total es la suma ponderada de todos los casos posibles.
+
+Uso típico:
+- Análisis por casos
+- DP probabilístico
+- Escenarios disjuntos
+
+
+--------------------------------------------------------
+Regla 7: Evento contenido en otro
+--------------------------------------------------------
+
+Condición:
+B ⊆ A   (B no puede ocurrir sin que ocurra A)
+
+Formula:
+P(B) = P(A) · P(B | A)
+
+Interpretación:
+Para que ocurra B, A debe ocurrir primero.
+
+Uso típico:
+- Caminos obligatorios
+- Procesos filtrados
+
+--------------------------------------------------------
+Regla 8: Teorema de Bayes
+--------------------------------------------------------
+
+Formula:
+P(A | B) = [ P(B | A) · P(A) ] / P(B)
+
+Usando probabilidad total:
+P(A | B) =
+P(B | A) · P(A)
+--------------------
+Σ P(B | Ai) · P(Ai)
+
+Interpretación:
+Permite inferir la causa a partir del efecto.
+
+Uso típico:
+- Inferencia
+- Clasificación
+- Diagnóstico
+- Probabilidad inversa
+
+
+--------------------------------------------------------
+Regla 9: Árbol de probabilidades
+--------------------------------------------------------
+
+Regla:
+La probabilidad de un camino es el producto de sus pasos.
+
+Formula:
+P(camino) = Π probabilidades del camino
+
+Interpretación:
+Cada hoja del árbol representa un resultado posible.
+
+Uso típico:
+- Secuencias
+- Juegos
+- Procesos iterativos
+- Markov
+
+
+--------------------------------------------------------
+Como definir un problema
+--------------------------------------------------------
+
+1. Definir eventos claros
+2. Identificar dependencias
+3. Dividir en casos disjuntos
+4. Usar intersección y condicional
+5. Verificar que la suma total ≤ 1
+
+--------------------------------------------------------
+
+Evento          -> Estado
+Condicional     -> Transición
+Árbol           -> Grafo de ejecución
+Producto        -> Camino
+Suma            -> Agregación de estados
+
+
+
+--------------------------------------------------------
+Reglas de oro
+--------------------------------------------------------
+
+1. Las probabilidades de caminos se multiplican
+2. Los casos disjuntos se suman
+3. La probabilidad condicional nunca es total por sí sola
+4. La información no redistribuye, concentra
