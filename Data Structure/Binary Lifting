@@ -1,0 +1,81 @@
+/*
+ * Binary Lifting + LCA (Lowest Common Ancestor)
+ *
+ * Preprocesa un árbol enraizado para responder consultas de ancestro
+ * y LCA en O(log N).
+ *
+ * - depth[u]: profundidad del nodo u
+ * - up[u][j]: ancestro de u a distancia 2^j
+ *
+ * Uso:
+ * 1. bfs()      -> calcula depth[] y up[][0]
+ * 2. calcule(n) -> construye la tabla de binary lifting
+ *
+ * Complejidad:
+ * - Preproceso: O(N log N)
+ * - Query: O(log N)
+ */
+
+
+const int N = 2e5+1;
+const int L = 20;
+
+vector <vector <int>> g(N);
+int depth[N];
+int up[N][L];
+
+void bfs(){
+
+    memset(depth, -1, sizeof depth);
+    memset(up, -1, sizeof up);
+
+    queue <int> q;
+    q.push(1);
+    depth[1] = 0;
+
+    while (q.empty() == false){
+        int u = q.front();
+        q.pop();
+
+        for (auto v: g[u]){
+            if (depth[v] == -1){
+                depth[v] = depth[u]+1;
+                up[v][0] = u;
+                q.push(v);
+            }
+        }
+    }
+
+}
+
+void calcule(int n){
+    for (int j = 1; j < L; j++){
+        for (int u = 1; u <= n; u++){
+            if (up[u][j-1] != -1)
+                up[u][j] = up[ up[u][j-1] ][ j-1 ];
+        }
+    }
+}
+
+
+int upK (int u, int k){
+    for (int j = 0; j < L; j++){
+        if (u == -1) return -1;
+        if (k >> j & 1) u = up[u][j];
+    }
+    return u;
+}
+
+int LCA(int a, int b){
+
+    if (depth[a] < depth[b]) swap(a, b);        
+    a = upK(a, depth[a] - depth[b]); // igualar produndidades       
+    if (a == b) return a;
+    for (int j = L-1; j >= 0; j--){
+        if (up[a][j] != -1 && up[a][j] != up[b][j]){
+            a = up[a][j];
+            b = up[b][j];
+        }
+    }    
+    return up[a][0]; // padre comun
+}
