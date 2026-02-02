@@ -1,4 +1,5 @@
 //g++ -fsanitize=address,undefined -fno-omit-frame-pointer -g -Wall -Wshadow -std=c++17 -Wno-unused-result -Wno-sign-compare -Wno-char-subscripts -DLOCAL -o code1 code1.cpp && ./code1 < in.txt
+//g++ -g -Wall -Wshadow -std=c++17 -Wno-unused-result -Wno-sign-compare -Wno-char-subscripts -DLOCAL -o main main.cpp && ./main < in.txt
 #include <bits/stdc++.h>
 
 using namespace std;
