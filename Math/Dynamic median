@@ -1,0 +1,14 @@
+void add(int x) {
+    if (l.empty() || x <= l.top()) l.push(x);
+    else r.push(x);
+    
+    if(l.size() > r.size() + 1) {
+        r.push(l.top());
+        l.pop();
+    }else if (r.size() > l.size()) {
+        l.push(r.top());
+        r.pop();
+    }
+}
+
+// mediana = l.top();
