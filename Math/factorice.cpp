@@ -9,7 +9,7 @@ bool compuesto[MX];
 
 void sieve() {
     for (int i = 2; i < MX; i++) spf[i] = i;
-    for (int i = 2; i * i < MX; i++) {
+    for (int i = 2; i < MX; i++) {
         if (!compuesto[i]) {
             primes.push_back(i);
             for (ll j = 1LL * i * i; j < MX; j += i) {
