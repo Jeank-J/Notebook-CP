@@ -1,0 +1,35 @@
+
+const double EPS = 1E-9;
+
+struct pt {
+    double x, y;
+};
+
+struct seg {
+    pt p, q;
+};
+
+// Verifica si dos intervalos 1D se intersectan
+bool intersect1d(double l1, double r1, double l2, double r2) {
+    if (l1 > r1) swap(l1, r1);
+    if (l2 > r2) swap(l2, r2);
+
+    return max(l1, l2) <= min(r1, r2) + EPS;
+}
+
+// Producto cruzado / orientación
+int vec(const pt& a, const pt& b, const pt& c) {
+    double s = (b.x - a.x) * (c.y - a.y)
+             - (b.y - a.y) * (c.x - a.x);
+
+    if (abs(s) < EPS) return 0;
+    return (s > 0) ? 1 : -1;
+}
+
+// Determina si dos segmentos se intersectan
+bool intersect(const seg& a, const seg& b) {
+    return intersect1d(a.p.x, a.q.x, b.p.x, b.q.x) &&
+           intersect1d(a.p.y, a.q.y, b.p.y, b.q.y) &&
+           vec(a.p, a.q, b.p) * vec(a.p, a.q, b.q) <= 0 &&
+           vec(b.p, b.q, a.p) * vec(b.p, b.q, a.q) <= 0;
+}
