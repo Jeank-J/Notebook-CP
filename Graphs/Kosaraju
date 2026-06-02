@@ -1,0 +1,123 @@
+/*
+    dfs1:
+    Guarda los nodos en orden de finalización.
+
+    dfs2:
+    Recorre el grafo invertido y obtiene una SCC.
+*/
+
+vector<vector<int>> g;
+vector<vector<int>> rg;
+
+vector<int> vis;
+vector<int> compId;
+
+stack<int> order;
+
+vector<vector<int>> SCCs;
+
+int current = 0;
+int pivot = 0;
+
+void dfs1(int u){
+    vis[u] = pivot;
+    for(auto v : g[u]){
+        if(vis[v] != pivot){
+            dfs1(v);
+        }
+    }
+    order.push(u);
+}
+
+void dfs2(int u, vector<int>& compCurrent){
+    vis[u] = pivot;
+    compId[u] = current;
+    compCurrent.push_back(u);
+    for(auto v : rg[u]){
+        if(vis[v] != pivot){
+            dfs2(v, compCurrent);
+        }
+    }
+}
+
+void solve(){
+
+    int n, m;
+    cin >> n >> m;
+
+    g.assign(n + 1, {});
+    rg.assign(n + 1, {});
+
+    vis.assign(n + 1, 0);
+    compId.assign(n + 1, 0);
+
+    SCCs.clear();
+    current = 0;
+
+    while(!order.empty()) order.pop();
+
+    for(int i = 0; i < m; i++){
+        int u, v;
+        cin >> u >> v;
+        g[u].push_back(v);
+        rg[v].push_back(u);
+    }
+
+    
+
+    pivot++; // <--
+    for(int i = 1; i <= n; i++){
+        if(vis[i] != pivot){
+            dfs1(i);
+        }
+    }
+
+    
+    pivot++; // <--
+    while(!order.empty()){
+
+        int u = order.top();
+        order.pop();
+        if(vis[u] == pivot) continue;
+        current++;
+        vector<int> compCurrent;
+        dfs2(u, compCurrent);
+        SCCs.push_back(compCurrent);
+    }
+
+   
+    // build dag
+    vector<vector<int>> dag(current + 1);
+
+    for(int i = 1; i <= n; i++){
+
+        for(auto x : g[i]){
+
+            int u = compId[i];
+            int v = compId[x];
+
+            if(u == v) continue;
+
+            dag[u].push_back(v);
+        }
+    }
+
+    // Opcional: eliminar duplicados
+
+    for(int i = 1; i <= current; i++){
+
+        sort(dag[i].begin(), dag[i].end());
+
+        dag[i].erase(
+            unique(dag[i].begin(), dag[i].end()),
+            dag[i].end()
+        );
+    }
+
+    /*
+        current      -> cantidad de SCC
+        compId[u]    -> SCC del nodo u
+        SCCs         -> lista de componentes
+        dag          -> DAG condensado
+    */
+}
