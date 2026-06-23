@@ -1,4 +1,9 @@
-La función φ(n) de Euler devuelve la cantidad de enteros positivos menores o iguales a n que son coprimos con n (es decir, su MCD con n es 1).
+La función phi(n) de Euler devuelve la cantidad de enteros positivos menores o iguales a n que son coprimos con n (es decir, su MCD con n es 1).
+phi(n) = n * (1 − 1 / p1​) * (1 − 1/ p2​) * ...
+r = n;
+-> r * (1 - 1 / i)
+-> r - r / i
+-> r -= r / 1
 
 int phi(int n) {
     int r = n;
