@@ -3,7 +3,7 @@ phi(n) = n * (1 − 1 / p1​) * (1 − 1/ p2​) * ...
 r = n;
 -> r * (1 - 1 / i)
 -> r - r / i
--> r -= r / 1
+-> r -= r / i
 
 int phi(int n) {
     int r = n;
