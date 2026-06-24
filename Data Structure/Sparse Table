@@ -1,0 +1,43 @@
+
+- Estructura para arreglos estáticos (sin actualizaciones).
+- Tiempo de preprocesamiento: O(N log N)
+- Tiempo de consulta:
+  - O(1) para operaciones idempotentes (`min`, `max`, `gcd`)
+  - O(log N) para operaciones no idempotentes
+- Complejidad espacial: O(N log N)
+
+const int MAX = 100005;
+const int LN = 20;
+
+int a[MAX];
+int rmq[LN][MAX];
+int lg[MAX];
+
+void build(int n){
+
+    
+    lg[1] = 0;
+    for(int i = 2; i <= n; i++) lg[i] = lg[i/2] + 1;
+
+    // [2^i][columna]
+
+    for(int j = 1; j <= n; j++) rmq[0][j] = a[j];
+
+    for(int i = 1; (1<<i) <= n; i++){
+
+        for(int j = 1; j + (1<<i) - 1 <= n; j++){
+            rmq[i][j] = max(
+                rmq[i-1][j],
+                rmq[i-1][j+(1<<(i-1))]
+            );
+        }
+    }
+}
+
+int query(int l,int r){
+    int i=lg[r-l+1];
+    return max(
+        rmq[i][l],
+        rmq[i][r-(1<<i)+1]
+    );
+}
