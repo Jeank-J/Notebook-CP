@@ -1,0 +1,142 @@
+https://vjudge.net/problem/UVA-12526
+
+//g++ -g -Wall -Wshadow -std=c++17 -Wno-unused-testult -Wno-sign-compare -Wno-char-subscripts -DLOCAL -o main main.cpp && main < in.txt
+#include <bits/stdc++.h>
+
+using namespace std;
+
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+
+template<class T> using T_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class L> using T_multiset = tree<L, null_type, less_equal<L>, rb_tree_tag, tree_order_statistics_node_update>;
+
+#define dbg(...) cerr << #__VA_ARGS__ << " = ["; dbg_out(__VA_ARGS__); cerr << "]\n"
+void dbg_out() {}
+
+template <typename T, typename... Args>
+void dbg_out(T x, Args... args) {
+    cerr << x;
+    if (sizeof...(args)) cerr << ",";
+    dbg_out(args...);
+}
+
+#define forn(i,n) for (int i = 0; i < n; i++)
+#define rforn(i,n) for (int i = n-1; i >= 0; i--)
+#define endl '\n'
+#define ff first
+#define ss second
+#define pb push_back
+#define ll long long
+#define sz(n) (int)n.size()
+#define all(x) x.begin(), x.end()
+#define read(x) for(auto &el : x) cin >> el;
+#define show(x) for (auto &num: x) cout << num << " "; cout << endl;
+#define FAST ios_base::sync_with_stdio(0); cin.tie(0);cout.tie(0);
+
+#define pc(x) __builtin_popcount(x)
+#define lsb(x) ((x) & -(x))
+#define lsb_idx(x) __builtin_ctz(x)
+#define on(x,i) ((x) |= (1LL << (i)))
+#define off(x,i) ((x) &= ~(1LL << (i)))
+#define toggle(x,i) ((x) ^= (1LL << (i)))
+
+struct Trie {
+
+    struct Node {
+
+        int nxt[26];
+        int pref;     // cuántas palabras pasan
+        int end;      // cuántas terminan
+
+        Node() {
+            for(int i = 0; i < 26; i++) nxt[i] = -1;
+            pref = 0;
+            end = 0;
+        }
+    };
+
+    vector<Node> trie;
+
+    Trie() {
+        trie.push_back(Node()); // raíz
+    }
+
+    void insert(string &s){
+
+        int cur = 0;
+        for(char c:s){
+            int x = c - 'a';
+            if(trie[cur].nxt[x] == -1){
+                trie[cur].nxt[x] = trie.size();
+                trie.push_back(Node());
+            }
+            cur = trie[cur].nxt[x];
+            trie[cur].pref++;
+        }
+        trie[cur].end++;
+    }
+
+    bool search(string &s){
+
+        int cur = 0;
+        for(char c:s){
+            int x = c - 'a';
+            if(trie[cur].nxt[x] == -1) return false;
+            cur = trie[cur].nxt[x];
+        }
+        return trie[cur].end > 0;
+    }
+
+
+    int countPrefix(string &s){
+
+        int cur = 0;
+        for(char c:s){
+            int x = c - 'a';
+            if(trie[cur].nxt[x] == -1) return 0;
+            cur = trie[cur].nxt[x];
+        }
+        return trie[cur].pref;
+    }
+
+    int get(int current, int last){
+                
+        int res = 0;
+        if (trie[current].pref != last){
+            res += trie[current].pref;
+        }
+        int cur = trie[current].pref;
+        if (trie[current].end > 0) cur = -2; // si en el nodo actual terminaron palabras
+
+        forn(i,26){
+            int next = trie[current].nxt[i];
+            if (next != -1){                
+                res += get(next,cur);
+            }
+        }
+        
+        return res;
+    }
+
+};
+
+
+void solve(){
+    
+    int n,k;
+    cin >> n >> k;
+    
+    Trie t;
+
+}
+
+int main() {
+
+    FAST
+    int test = 1;
+    //cin >> test;    
+    while(test--) solve();
+
+    return 0;
+}
