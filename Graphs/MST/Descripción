@@ -1,0 +1,11 @@
+/*
+Minimum Spanning Tree (MST)
+
+Conecta todos los nodos con n-1 aristas, sin ciclos,
+minimizando la suma total de pesos.
+
+Complejidad:
+Depende del algoritmo utilizado:
+- Kruskal: O(m log m)
+- Prim: O(m log n)
+*/
