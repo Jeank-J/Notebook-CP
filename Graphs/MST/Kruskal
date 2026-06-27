@@ -1,0 +1,38 @@
+/*
+Kruskal
+
+Construye un MST ordenando aristas por peso y agregando
+las más pequeñas que no formen ciclos.
+
+Complejidad:
+O(m log m)
+*/
+
+struct Edge{
+    int u,v,w;
+
+    bool operator<(const Edge& other){
+        return w<other.w;
+    }
+};
+
+// ------------------------------------
+// importar implementacion de algun DSU
+// ------------------------------------
+
+long long kruskal(int n,vector<Edge>& edges){
+
+    sort(edges.begin(),edges.end());
+
+    DSU dsu(n);
+
+    long long cost=0;
+
+    for(auto [u,v,w]:edges){
+
+        if(dsu.unite(u,v))
+            cost+=w;
+    }
+
+    return cost;
+}
