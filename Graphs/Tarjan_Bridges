@@ -1,0 +1,39 @@
+/*
+Finds all bridges (cut edges) in an undirected graph using DFS + low-link values.
+
+Time: O(V + E)
+Space: O(V)
+
+*/
+
+const int N = 2e5;
+int vis[N]; // tiempo cuando descubro x
+int low[N]; // hasta qué ancestro puedo regresar
+
+vector<vector<int>> g;
+int timer = 0;
+
+void dfs(int u, int parent = -1){
+
+    vis[u] = low[u] = ++timer;
+
+    for (int i = 1; i < sz(g); i++) cout << low[i] << " " << vis[i] << ",   ";
+    cout << endl;
+    for (int v : g[u]){
+        
+        if (v == parent) continue;
+        if (!vis[v]) {
+            dfs(v, u);
+            // actualizar low
+            low[u] = min(low[u], low[v]);
+            // condición de puente
+            if (low[v] > vis[u]) {
+                cout << "(" << u << ", " << v << ") es puente " << endl;                
+            }
+        }else {
+            // back edge
+            low[u] = min(low[u], vis[v]);
+        }
+    }
+    
+}
