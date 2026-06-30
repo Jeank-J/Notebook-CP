@@ -1,0 +1,71 @@
+==============================
+COMBINACIONES (PROPIEDADES)
+==============================
+
+Fórmula general:
+
+C(n,k) = n! / (k!(n-k)!)
+
+Ejemplo:
+Dado un conjunto de n elementos, calcular cuántas formas existen
+de escoger k elementos sin importar el orden.
+
+
+Propiedades importantes:
+
+1. Casos extremos:
+   C(n,0) = C(n,n) = 1
+
+   Ejemplo:
+   Dadas n casillas, escoger ninguna o escoger todas
+   solo puede hacerse de una manera.
+
+
+2. Propiedad de Pascal:
+   C(n,k) = C(n-1,k-1) + C(n-1,k)
+
+   Ejemplo:
+   Para formar grupos de k personas entre n personas,
+   se puede decidir incluir a una persona específica
+   o no incluirla.
+
+
+3. Simetría:
+   C(n,k) = C(n,n-k)
+
+   Ejemplo:
+   Escoger k estudiantes de un grupo de n produce
+   la misma cantidad de posibilidades que dejar
+   fuera n-k estudiantes.
+
+
+4. Relación recursiva:
+   C(n,k) = (n/k) * C(n-1,k-1)
+
+   Ejemplo:
+   Permite construir la cantidad de grupos de tamaño k
+   usando resultados ya calculados.
+
+
+5. Suma de combinaciones:
+   Σ C(n,k) = 2^n
+
+   Ejemplo:
+   Dado un conjunto con n elementos, contar todas las
+   posibles selecciones de elementos.
+
+
+6. Suma de cuadrados:
+   Σ [C(n,k)]² = C(2n,n)
+
+   Ejemplo:
+   Contar formas de combinar elementos de dos grupos
+   diferentes manteniendo la misma cantidad elegida.
+
+
+7. Suma ponderada:
+   Σ k*C(n,k) = n*2^(n-1)
+
+   Ejemplo:
+   Calcular cuántas veces aparece un elemento al
+   considerar todas las posibles selecciones.
