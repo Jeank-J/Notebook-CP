@@ -1,0 +1,19 @@
+Permite desarrollar una potencia de un binomio.
+
+Formula:
+
+(x+y)^n = Σ C(n,k) x^k y^(n-k)
+
+Donde:
+
+- C(n,k): coeficiente binomial.
+- k: valor que varía desde 0 hasta n.
+
+Ejemplos:
+
+(x+y)² = x² + 2xy + y²
+
+(x+y)³ = x³ + 3x²y + 3xy² + y³
+
+Idea principal:
+Los coeficientes de cada término provienen de las combinaciones C(n,k).
