@@ -1,0 +1,25 @@
+Técnica offline para consultas sobre arreglos.
+
+Ordena consultas para minimizar el movimiento
+de una ventana [L,R].
+
+Estructura:
+
+while(R<newR) add(++R)
+while(R>newR) remove(R--)
+
+while(L<newL) remove(L++)
+while(L>newL) add(--L)
+
+Los bloques solo se usan para ordenar consultas.
+
+Aplicaciones:
+
+- número de distintos
+- frecuencias
+- k-th statistics
+- consultas difíciles sobre rangos
+
+Complejidad:
+
+O((N+Q)√N)
