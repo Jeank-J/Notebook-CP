@@ -1,0 +1,26 @@
+Mantiene una estructura por subárbol y fusiona siempre el
+contenedor pequeño dentro del grande.
+
+Idea:
+
+if(size(A)<size(B))
+    swap(A,B)
+
+merge(B -> A)
+
+Cada elemento cambia de contenedor O(logN) veces.
+
+Aplicaciones:
+
+- frecuencias por subárbol
+- colores distintos
+- estadísticas de subárbol
+- consultas offline
+
+Complejidad típica:
+
+map/set:
+O(N log^2 N)
+
+unordered_map:
+cercano a O(N log N)
