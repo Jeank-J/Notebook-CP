@@ -1,0 +1,200 @@
+// DSU on Tree (Sack)
+// O(N log N)
+//
+// Idea:
+// 1) procesar hijos pequeños y borrarlos
+// 2) procesar hijo pesado y conservarlo
+// 3) volver a agregar pequeños
+// 4) agregar nodo actual
+// 5) responder consultas
+//
+// Personalizar:
+// add(u)
+// remove(u)
+// answer()
+
+const int N=1e5+5;
+
+vector<int> g[N];
+
+int sz[N];
+int heavy[N];
+
+int tin[N],tout[N];
+int euler[N];
+int timer=0;
+
+bool big[N];
+
+
+//====================================
+// subtree size + heavy child
+//====================================
+
+void dfs_sz(int u,int p){
+
+    sz[u]=1;
+    heavy[u]=-1;
+
+    int mx=0;
+
+    for(auto v:g[u]){
+
+        if(v==p) continue;
+
+        dfs_sz(v,u);
+
+        sz[u]+=sz[v];
+
+        if(sz[v]>mx){
+
+            mx=sz[v];
+            heavy[u]=v;
+        }
+    }
+}
+
+
+//====================================
+// Euler
+// subtree(u)=[tin[u],tout[u]]
+//====================================
+
+void dfs_euler(int u,int p){
+
+    tin[u]=timer;
+
+    euler[timer]=u;
+
+    timer++;
+
+    for(auto v:g[u]){
+
+        if(v==p)
+            continue;
+
+        dfs_euler(v,u);
+    }
+
+    tout[u]=timer-1;
+}
+
+
+//====================================
+// PERSONALIZAR
+//====================================
+
+void add(int u){
+
+    // ejemplo:
+
+    // int c=color[u];
+
+    // cnt[freq[c]]--;
+    // freq[c]++;
+    // cnt[freq[c]]++;
+}
+
+
+void remove(int u){
+
+    // ejemplo:
+
+    // int c=color[u];
+
+    // cnt[freq[c]]--;
+    // freq[c]--;
+    // cnt[freq[c]]++;
+}
+
+
+//====================================
+// agregar subárbol completo
+//====================================
+
+void add_subtree(int u,int p){
+
+    add(u);
+
+    for(auto v:g[u]){
+
+        if(v==p || big[v])
+            continue;
+
+        add_subtree(v,u);
+    }
+}
+
+void remove_subtree(int u,int p){
+
+    remove(u);
+
+    for(auto v:g[u]){
+
+        if(v==p || big[v])
+            continue;
+
+        remove_subtree(v,u);
+    }
+}
+
+
+//====================================
+// DSU on Tree
+//====================================
+
+void dfs(int u,int p,bool keep){
+
+    // pequeños
+    for(auto v:g[u]){
+
+        if(v==p || v==heavy[u])
+            continue;
+
+        dfs(v,u,false);
+    }
+
+
+    // pesado
+    if(heavy[u]!=-1){
+
+        dfs(heavy[u],u,true);
+
+        big[heavy[u]]=true;
+    }
+
+
+    // volver a agregar pequeños
+    for(auto v:g[u]){
+
+        if(v==p || v==heavy[u])
+            continue;
+
+        add_subtree(v,u);
+    }
+
+
+    // agregar nodo actual
+    add(u);
+
+
+    //================================
+    // responder consultas de u
+    //================================
+
+    // for(auto [query,id]:queries[u]){
+    //
+    //      ans[id]=answer(query);
+    // }
+
+
+    if(heavy[u]!=-1)
+        big[heavy[u]]=false;
+
+
+    // borrar si no conservar
+    if(!keep){
+
+        remove_subtree(u,p);
+    }
+}
