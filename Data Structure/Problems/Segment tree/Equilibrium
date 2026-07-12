@@ -1,0 +1,240 @@
+/*
+* https://codeforces.com/contest/1556/problem/E
+*/
+
+//g++ -g -Wall -Wshadow -std=c++17 -Wno-unused-result -Wno-sign-compare -Wno-char-subscripts -DLOCAL -o cses cses.cpp && cses < in.txt
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// #include <ext/pb_ds/assoc_container.hpp>
+// using namespace __gnu_pbds;
+
+// template<class T> using T_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_nodo_update>;
+// template<class L> using T_multiset = tree<L, null_type, less_equal<L>, rb_tree_tag, tree_order_statistics_nodo_update>;
+
+
+#define dbg(...) cerr << #__VA_ARGS__ << " = ["; dbg_out(__VA_ARGS__); cerr << "]\n"
+void dbg_out() {}
+
+template <typename T, typename... Args>
+void dbg_out(T x, Args... args) {
+    cerr << x;
+    if (sizeof...(args)) cerr << ",";
+    dbg_out(args...);
+}
+
+
+
+#define forn(i,n) for (int i = 0; i < n; i++)
+#define rforn(i,n) for (int i = n-1; i >= 0; i--)
+#define endl '\n'
+#define ff first
+#define ss second
+#define pb push_back
+#define ll long long 
+#define sz(n) (int)n.size()
+#define all(x) x.begin(), x.end()
+#define read(x) for(auto &el : x) cin >> el;
+#define show(x) for (auto &num: x) cout << num << " "; cout << endl;
+#define FAST ios_base::sync_with_stdio(0); cin.tie(0);cout.tie(0);
+
+#define pc(x) __builtin_popcount(x)
+#define lsb(x) ((x) & -(x))
+#define lsb_idx(x) __builtin_ctz(x)
+#define on(x,i) ((x) |= (1LL << (i)))
+#define off(x,i) ((x) &= ~(1LL << (i)))
+#define toggle(x,i) ((x) ^= (1LL << (i)))
+
+const int N = 1e5+1;
+const int S = sqrt(N);
+const int B = N / S + 1;
+
+ll mxBlock[N];
+
+// [val, tipo]
+
+pair<ll,bool> previo[N]; // previo al bloque   
+pair<ll,bool> posterior[N]; // posterior al bloque 
+
+
+struct STsum {
+
+    vector <ll> st;
+
+    STsum(int n){
+        st.resize(n * 4);
+    }
+
+
+    ll oper(ll L, ll R) {
+        return L + R;
+    }
+
+    void build(int nodo, int l, int r, const vector<ll> &v) {
+        if (l == r) {
+            st[nodo] = v[l];
+            return;
+        }
+        int mid = (l + r) / 2;
+        build(nodo * 2, l, mid, v);
+        build(nodo * 2 + 1, mid + 1, r, v);
+        st[nodo] = oper(st[nodo * 2], st[nodo * 2 + 1]);
+    }
+
+    ll query(int nodo, int l, int r, int lt, int rt) {
+        if (l > rt or r < lt) return 0;
+        if (l >= lt and r <= rt) return st[nodo];
+        
+        int mid = (l+r) / 2;
+        ll L = query(nodo * 2, l, mid, lt, rt);
+        ll R = query(nodo * 2 + 1, mid+1, r, lt, rt);
+
+        return L + R;
+    }
+
+};
+
+struct STmx {
+
+    vector <ll> st;
+    STmx (int n){
+        st.resize(n * 4);
+    }    
+
+    ll oper(ll L, ll R) {
+        return max(L, R);
+    }
+
+    void build(int nodo, int l, int r, const vector<ll> &v) {
+        if (l == r) {
+            st[nodo] = v[l];
+            return;
+        }
+        int mid = (l + r) / 2;
+        build(nodo * 2, l, mid, v);
+        build(nodo * 2 + 1, mid + 1, r, v);
+        st[nodo] = oper(st[nodo * 2], st[nodo * 2 + 1]);
+    }    
+
+    ll query(int nodo, int l, int r, int lt, int rt) {
+        if (l > rt or r < lt) return -1e18;
+        if (l >= lt and r <= rt) return st[nodo];
+        
+        int mid = (l+r) / 2;
+        ll L = query(nodo * 2, l, mid, lt, rt);
+        ll R = query(nodo * 2 + 1, mid+1, r, lt, rt);
+
+        return max(L,R);
+    }
+
+};
+
+struct STmn {
+
+    vector <ll> st;
+    STmn (int n){
+        st.resize(n * 4);
+    }    
+
+    ll oper(ll L, ll R) {
+        return min(L, R);
+    }
+
+    void build(int nodo, int l, int r, const vector<ll> &v) {
+        if (l == r) {
+            st[nodo] = v[l];
+            return;
+        }
+        int mid = (l + r) / 2;
+        build(nodo * 2, l, mid, v);
+        build(nodo * 2 + 1, mid + 1, r, v);
+        st[nodo] = oper(st[nodo * 2], st[nodo * 2 + 1]);
+    }    
+
+    ll query(int nodo, int l, int r, int lt, int rt) {
+        if (l > rt or r < lt) return +1e18;
+        if (l >= lt and r <= rt) return st[nodo];
+        
+        int mid = (l+r) / 2;
+        ll L = query(nodo * 2, l, mid, lt, rt);
+        ll R = query(nodo * 2 + 1, mid+1, r, lt, rt);
+
+        return oper(L,R);
+    }
+
+};
+
+
+void solve(){
+
+    int n,q;
+    cin >> n >> q;
+
+    vector <ll> v(n);
+    vector <ll> current(n);
+    vector <ll> pares(n);
+
+    read(v);
+
+    forn(i,n){
+        ll x;
+        cin >> x;
+        v[i] -= x;
+    }
+
+    ll cont = 0;
+    forn(i,n) cont += v[i], current[i] = cont;
+
+    // show(v);
+    // dbg();
+    // show(current);
+    // dbg();
+
+    STsum sum(n);
+    STmx mx(n);    
+    STmn mn(n);
+
+    sum.build(1,0,n-1,v);
+    mx.build(1,0,n-1,current);    
+    mn.build(1,0,n-1,current);
+
+    
+
+
+    while (q--){
+
+        int l,r;
+        cin >> l >> r;
+        
+        l -= 1, r -= 1;
+
+        if (sum.query(1,0,n-1,l,r) != 0){
+            cout << "-1" << endl;
+            continue;
+        }
+
+        ll mnp = (l == 0? 0: current[l-1]);
+
+        if (mx.query(1,0,n-1,l,r) > mnp){
+            cout << "-1" << endl;
+            continue;
+        }
+        
+        
+        ll ans = mn.query(1,0,n-1,l,r) - mnp;
+        cout << abs(ans) << endl;
+    }
+
+}
+
+
+int main() {
+
+    FAST        
+    int test = 1;        
+    //cin >> test;    
+    while (test--) solve();
+
+    return 0;
+}
