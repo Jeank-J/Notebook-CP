@@ -1,0 +1,58 @@
+/*
+Calcula hashes de secuencias y permite obtener el hash de cualquier intervalo [l, r] en O(1).
+Usa MOD = 2^61 - 1 y una base aleatoria para reducir la probabilidad de colisiones.
+*/
+
+struct RollingHash {
+
+    static const ll MOD = (1LL << 61) - 1;
+    ll BASE;
+    vector<ll> h;
+    vector<ll> pw;
+    int n = 0;
+
+    RollingHash() {
+        static mt19937 rng(
+            chrono::steady_clock::now().time_since_epoch().count()
+        );
+        BASE = uniform_int_distribution<ll>(27, MOD - 1)(rng);
+        h.pb(0);
+        pw.pb(1);
+    }
+
+    ll mulmod(ll a, ll b) {
+        const ll MASK30 = (1LL << 30) - 1;
+        const ll MASK31 = (1LL << 31) - 1;
+        ll a0 = a & MASK30, a1 = a >> 30;
+        ll b0 = b & MASK30, b1 = b >> 30;
+        ll mid = a0 * b1 + a1 * b0;
+        ll high = a1 * b1;
+        ll res = a0 * b0 + (high >> 1) + ((high & 1) << 60) + (mid >> 31) + ((mid & MASK31) << 30) + 1;
+        res = (res & MOD) + (res >> 61);
+        res = (res & MOD) + (res >> 61);
+        return res - 1; 
+    }
+
+    void add(ll x) {
+        h.pb((mulmod(h.back(), BASE) + x) % MOD);
+        pw.pb(mulmod(pw.back() , BASE) % MOD);
+        n++;
+    }
+
+    void remove() {
+        if (n == 0) return;
+        h.pop_back();
+        pw.pop_back();
+        n--;
+    }
+
+    // Hash del intervalo [l, r]
+    ll get(int l, int r) {
+        if (l < 0 || r >= n || l > r) return -1;
+        return (h[r + 1] - mulmod(h[l], pw[r - l + 1]) + MOD) % MOD;
+    }
+    
+    ll get() {
+        return h.back();
+    }
+};
