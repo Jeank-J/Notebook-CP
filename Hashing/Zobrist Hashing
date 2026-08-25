@@ -1,0 +1,35 @@
+/*
+Zobrist hashing es una técnica de hashing probabilístico que asigna valores aleatorios a los posibles elementos 
+o estados y los combina para representar un conjunto o multiset. En este caso se utiliza suma modular,
+lo que permite conservar las multiplicidades de los elementos.
+
+*/
+
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+ll ran(ll l, ll r) {
+    return uniform_int_distribution<ll>(l, r)(rng);
+}
+
+const ll MOD = (1LL << 61) - 1;
+
+vector<ll> hashValue(n + 1);
+
+for (int i = 1; i <= n; i++) {
+    hashValue[i] = ran(1, MOD - 1);
+}
+
+vector<ll> pref(n + 1, 0);
+
+for (int i = 1; i <= n; i++) {
+    pref[i] = (pref[i - 1] + hashValue[a[i]]) % MOD;
+}
+
+ll getHash(int l, int r) {
+    return (pref[r] - pref[l - 1] + MOD) % MOD;
+}
+
+/*
+Dos multisets iguales siempre producen el mismo hash. Para multisets diferentes, existe una pequeña probabilidad de
+colisión, por lo que es un algoritmo probabilístico.
+*/
