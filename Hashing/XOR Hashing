@@ -1,0 +1,27 @@
+/*
+XOR hashing es una técnica probabilística que asigna un valor aleatorio a cada elemento
+y combina los valores usando la operación XOR. Es útil para comparar conjuntos o estados de forma rápida,
+ya que XOR es conmutativo y asociativo.
+*/
+Código base:
+
+mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+
+ll ran(ll l, ll r) {
+    return uniform_int_distribution<ll>(l, r)(rng);
+}
+
+vector<ll> hashValue(n + 1);
+
+for (int i = 1; i <= n; i++) {
+    hashValue[i] = ran(1, (1LL << 62));
+}
+
+ll getHash(const vector<ll>& v) {
+    ll h = 0;
+    for (ll x : v)
+        h ^= hashValue[x];
+    return h;
+}
+
+// Importante: XOR elimina las repeticiones porque x ^ x = 0. Por ejemplo, {1, 2, 2} y {1} producen el mismo hash. Por esto no es adecuado cuando las multiplicidades de un multiset importan.
