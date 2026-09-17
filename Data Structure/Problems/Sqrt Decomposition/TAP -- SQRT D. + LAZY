@@ -1,0 +1,145 @@
+// https://codeforces.com/gym/106682/problem/M
+
+#include <bits/stdc++.h>
+using namespace std;
+#define sz(x) (int)x.size()
+#define ff first
+#define ss second
+#define ll long long
+#define pb push_back
+#define endl '\n'
+
+#define int int64_t
+
+const int N = 2e5+1;
+const int MAX_B = 500; 
+
+int S; 
+int n, m;
+
+int v[N];
+int current_val[N];
+int iniBloque[MAX_B];
+int curBloque[MAX_B];
+
+int lazy_type[MAX_B]; 
+// 0 -> Si no hay actualizaciones pendientes en el bloque
+// 1 -> Si el bloque entero fue modificado a cero
+// 2 -> si el bloque entero fue modificado a su valor original
+
+void push(int b) {
+    if (lazy_type[b] == 0) return;
+    
+    int start = b * S;
+    int end = min(n, start + S);
+    
+    if (lazy_type[b] == 1) { 
+        for (int i = start; i < end; i++) {
+            current_val[i] = 0;
+        }
+    } else if (lazy_type[b] == 2) { 
+        for (int i = start; i < end; i++) {
+            current_val[i] = v[i];
+        }
+    }
+   
+    lazy_type[b] = 0; 
+}
+
+void oper(int pos, int x) {
+
+    while (x > 0 && pos >= 0) {
+        int b = pos / S;
+        int start_b = b * S;
+        int end_b = min(n - 1, start_b + S - 1);
+        
+        if (pos == end_b && curBloque[b] <= x) {
+            x -= curBloque[b];
+            curBloque[b] = 0;
+            lazy_type[b] = 1;
+            pos = start_b - 1; 
+        } else {            
+            push(b);
+            while (x > 0 && pos >= start_b) {
+                int mn = min(current_val[pos], x);
+                x -= mn;
+                curBloque[b] -= mn;
+                current_val[pos] -= mn;
+                pos--;
+            }
+        }
+    }
+}
+
+int query(int l, int r) {
+    int res = 0;
+    while (l <= r) {
+        int b = l / S;
+        int end_b = min(n - 1, b * S + S - 1);        
+        if (l == b * S && end_b <= r) {
+            res += curBloque[b];
+            curBloque[b] = iniBloque[b];
+            lazy_type[b] = 2;
+            
+            l = end_b + 1; 
+        } else {            
+            push(b);
+            int limit = min(r, end_b);
+            while (l <= limit) {
+                res += current_val[l];                                
+                curBloque[b] += (v[l] - current_val[l]);
+                current_val[l] = v[l];
+                
+                l++;
+            }
+        }
+    }
+    return res;
+}
+
+void solve() {
+    cin >> n >> m;
+        
+    S = sqrt(n);
+    if (S == 0) S = 1; 
+
+    vector<int> pre(n);
+    int cont = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];
+        current_val[i] = v[i];
+        
+        int b = i / S;
+        iniBloque[b] += v[i];
+        curBloque[b] += v[i];
+        
+        cont += v[i];
+        pre[i] = cont;
+    }   
+
+    memset(lazy_type, 0, sizeof(lazy_type));
+
+    while (m--) {
+        int t;
+        cin >> t;
+        if (t == 1) {
+            int pos, x;
+            cin >> pos >> x;
+            pos -= 1;
+            oper(pos, x);
+        } else {
+            int l, r;
+            cin >> l >> r;
+            l -= 1, r -= 1;
+            int cant = query(l, r);
+            int tot = pre[r] - (l == 0 ? 0 : pre[l - 1]);
+            cout << tot - cant << endl;
+        }
+    }
+}
+
+signed main() {
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);    
+    solve();
+    return 0;
+}
