@@ -28,20 +28,36 @@ $$\begin{pmatrix} a & b \\ c & d \end{pmatrix} \begin{pmatrix} F(n-1) \\ F(n-2) 
 
 ### Igualando con la recurrencia
 
-Comparando la primera fila con $F(n) = 3F(n-1) + 2F(n-2)$:
+Igualamos la primera componente con $F(n) = 3F(n-1) + 2F(n-2)$:
 
 $$a = 3, \quad b = 2$$
 
-Comparando la segunda fila con $F(n-1) = 1 \cdot F(n-1) + 0 \cdot F(n-2)$:
+La segunda componente corresponde a $F(n-1)$:
 
 $$c = 1, \quad d = 0$$
 
-Por lo tanto, la matriz de transición es:
+Por lo tanto:
 
-$$\begin{pmatrix} F(n) \\ F(n-1) \end{pmatrix} = \begin{pmatrix} 3 & 2 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} F(n-1) \\ F(n-2) \end{pmatrix}$$
+$$\begin{pmatrix} F(n) \\ F(n-1) \end{pmatrix} = \begin{pmatrix} 3F(n-1) + 2F(n-2) \\ 1 \cdot F(n-1) + 0 \cdot F(n-2) \end{pmatrix} = \begin{pmatrix} 3 & 2 \\ 1 & 0 \end{pmatrix} \begin{pmatrix} F(n-1) \\ F(n-2) \end{pmatrix}$$
 
-### Forma matricial general
+### Condiciones iniciales
 
-Esto permite calcular $F(n)$ elevando la matriz a la potencia $n$:
+$$F(0) = 1, \quad F(1) = 2$$
 
-$$\begin{pmatrix} F(n) \\ F(n-1) \end{pmatrix} = \begin{pmatrix} 3 & 2 \\ 1 & 0 \end{pmatrix}^{n-1} \begin{pmatrix} F(1) \\ F(0) \end{pmatrix}$$
+$$\begin{pmatrix} F(1) \\ F(0) \end{pmatrix} = \begin{pmatrix} 2 \\ 1 \end{pmatrix}$$
+
+### Ejemplo: calcular $F(3)$
+
+$$F(2) = 3F(1) + 2F(0) = 3 \cdot 2 + 2 \cdot 1 = 6 + 2 = 8$$
+
+$$F(3) = 3F(2) + 2F(1) = 3 \cdot 8 + 2 \cdot 2 = 24 + 4 = 28$$
+
+### Verificación con la matriz
+
+$$F(3) = M^2 \begin{pmatrix} 2 \\ 1 \end{pmatrix}, \quad M = \begin{pmatrix} 3 & 2 \\ 1 & 0 \end{pmatrix}$$
+
+$$M^2 = \begin{pmatrix} 11 & 6 \\ 3 & 2 \end{pmatrix}$$
+
+$$M^2 \begin{pmatrix} 2 \\ 1 \end{pmatrix} = \begin{pmatrix} 11 & 6 \\ 3 & 2 \end{pmatrix} \begin{pmatrix} 2 \\ 1 \end{pmatrix} = \begin{pmatrix} 28 \\ 8 \end{pmatrix}$$
+
+$$\Rightarrow F(3) = 28$$
