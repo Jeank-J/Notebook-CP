@@ -69,5 +69,4 @@ struct Trie {
         
         return 0;
     }
-
 };
