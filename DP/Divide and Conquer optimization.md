@@ -24,6 +24,16 @@ C(a,c) + C(b,d) <= C(a,d) + C(b,c)
 
 Es decir, agregar los mismos elementos al final cuesta más si el segmento es más largo.
 Suele cumplirse con `f(suma)` si f es convexa y los elementos son >= 0, y con conteos de pares dentro del segmento.
+
+Si se **maximiza**, todo se invierte (equivale a minimizar -C):
+
+```
+C(a,c) + C(b,d) >= C(a,d) + C(b,c)
+⇔ C(a,d) - C(a,c) <= C(b,d) - C(b,c)
+```
+
+Es decir, agregar los mismos elementos suma menos si el segmento es más largo (ej. cantidad de valores distintos).
+En el código: ans empieza en -INF, comparar con `>` y los estados imposibles en -INF.
 Si hay duda: comparar contra la DP O(k·n²) con casos random y verificar que opt no decrezca.
 
 Idea: para llenar la capa i, se resuelve primero la j del medio. Su corte óptimo sirve de techo para las j menores y de piso para las mayores. Cada nivel de la recursión recorre O(n) en total y hay log n niveles.
